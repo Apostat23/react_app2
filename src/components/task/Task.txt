@@ -1,0 +1,13 @@
+// import React from 'react'
+
+// export const Task = (
+//   task: { id: string, title: string, state: string }, 
+//     onArchiveTask: string, onPinTask: string) => {
+
+//   return (
+//     <div className="list-item">
+//       <input type="text" value={task.title} readOnly={true} />
+//     </div>
+//   )
+// }
+
