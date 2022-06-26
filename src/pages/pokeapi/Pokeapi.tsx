@@ -1,54 +1,51 @@
-import React from 'react'
 import { useState, useEffect } from 'react'
-
-interface ability {
-  ability: {
-    name: string
-    url: string
-  }
-}
+import { Link } from '../../components/link/Link'
+import { useFetchData } from '../../hooks/useFetchData'
 
 export const Pokeapi = () => {
-
-  const apiUrl = 'https://pokeapi.co/api/v2/pokemon/ditto'
-  const [pokemon, setPokemon] = useState<any>({})
-  const [loading, setLoading] = useState(true)
-
+  const [url, setUrl] = useState('https://pokeapi.co/api/v2/pokemon/')
+  const [state, setState] = useState<any>({
+    loading: false,
+    data: null,
+  })
+  const [data, loading, fetchData] = useFetchData()
+  
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(apiUrl)
-      const data = await response.json()
-      setPokemon(data)
-      setLoading(false)
-    }
-    fetchData()
-  }, [])
+    fetchData(url)
+    console.log(data)
+    setState({
+      loading: loading,
+      data: data.results,
+    })
+  }, [url])
 
-  const name = pokemon.name || 'Ditto'
-  const weight = pokemon.weight || 0
-  const height = pokemon.height || 0
-  const abilities = pokemon.abilities
+  const handleClick = (url: string) => {
+    setUrl(url)
+  }
 
   return (
     <>
-      <h1>Pokeapi</h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          <p>Name: {name}</p>
-          <p>Weight: {weight}</p>
-          <p>Height: {height}</p>
-          <p>Abilities:</p>
+      <h1>Pokemon</h1>
+      {
+        data.previous && (
+          <button onClick={() => handleClick(data.previous)}>Previous</button>
+        )
+      }
+      <button onClick={() => handleClick(data.next)}>Next</button>
+      {state.page}
+      {
+        state.loading ? <p>Loading...</p>
+        : state.error ? <p>Error: {state.error}</p>
+        : state.data ? (
           <ul>
-            {abilities.map((ability: ability) => (
-              <li key={ability.ability.url}>
-                {ability.ability.name}
+            {state.data.map((item: any) => (
+              <li key={item.name}>
+                <Link url={item.url} text={item.name} />
               </li>
             ))}
           </ul>
-    </>
-      )}
+        ) : null
+      }
     </>
   )
 }
