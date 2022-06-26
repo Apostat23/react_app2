@@ -1,7 +1,7 @@
 import {FC} from 'react'
 import {useState, useEffect} from 'react'
-import { useFetchData } from '../../../../hooks/useFetchData'
-import { Link } from '../../../../components/link/Link'
+import {useFetchData} from '../../../../hooks/useFetchData'
+import DisplayPokemon from '../DisplayPokemon/index'
 
 interface Props {
   fill: string
@@ -12,32 +12,27 @@ const Start: FC<Props> = ({fill, stroke}) => {
   const [url , setUrl] = useState('https://pokeapi.co/api/v2/pokemon/')
   const [state, setState] = useState<any>({
     loading: false,
-    data: null,
+    pokemonList: null,
   })
-
   const [data, loading, fetchData] = useFetchData()
-
+  const handleClick = (url: string) => {
+    setUrl(url)
+    setState({
+      loading: loading,
+      pokemonList: data.results,
+    })
+  }
   useEffect(() => {
     fetchData(url)
     setState({
       loading: loading,
-      data: data.results,
+      pokemonList: data.results,
     })
-  }
-  , [url])
-
-  const handleClick = (url: string) => {
-    setUrl(url)
-  }
+  }, [url])
 
   return (
     <>
       <h1>Pokemon</h1>
-      <div>
-        <svg width="100" height="100">
-          <circle cx={50} cy={50} r={40} fill={fill} stroke={stroke} />
-        </svg>
-      </div>
       {
         data.previous 
           ? <button onClick={() => handleClick(data.previous)}>Previous</button>
@@ -47,11 +42,11 @@ const Start: FC<Props> = ({fill, stroke}) => {
       {
         loading ? <p>Loading...</p>
         : state.error ? <p>Error: {state.error}</p>
-        : state.data ? (
+        : state.pokemonList ? (
           <ul>
-            {state.data.map((item: any) => (
-              <li key={item.name}>
-                <Link url={item.url} text={item.name} />
+            {state.pokemonList.map((pokemon: any) => (
+              <li key={pokemon.name}>
+                <DisplayPokemon url={pokemon.url} name={pokemon.name} />
               </li>
             ))}
           </ul>

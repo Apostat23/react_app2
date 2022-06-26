@@ -6,10 +6,6 @@ export default {
   component: Start
 } 
 
-export const Red = () => (
-  <Start  fill='red' stroke='black'/>
-)
-
-export const Purple = () => (
-  <Start fill='purple' stroke='black'/>
+export const First = () => (
+  <Start  fill='purple' stroke='black'/>
 )
