@@ -17,12 +17,12 @@ const Start: FC<Props> = ({url, name}) => {
 
   // If the pokemon is not yet fetched, return a loading indicator.
   if (!pokemon) {
-    return <div>Loading...</div>;
+    return <div>...</div>;
   }
 
   // If the pokemon is fetched, return its info in a table.
   return (
-    <>
+    <div>
       <h1>{pokemon.name}</h1>
       <table>
         <tbody>
@@ -34,14 +34,10 @@ const Start: FC<Props> = ({url, name}) => {
             <td>Weight</td>
             <td>{pokemon.weight}</td>
           </tr>
-          <tr>
-            <td>Image<br />
-              { pokemon.sprites && <img src={pokemon.sprites.front_default} alt={pokemon.name} /> }
-            </td>
-          </tr>
         </tbody>
       </table>
-    </>
+      {pokemon.sprites && <img src={pokemon.sprites.front_default} alt={pokemon.name} />}
+    </div>
   )
 }
 

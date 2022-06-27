@@ -2,14 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { Start } from './pages/start/Start';
+import {BrowserRouter} from 'react-router-dom';
+//import { Start } from './pages/start/Start';
+import App from './App';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Start />
+    <BrowserRouter>
+      <App /> 
+    </BrowserRouter>
   </React.StrictMode>
 );
 

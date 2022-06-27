@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { First } from '../first/First'
 import { AreaCalculator } from '../../components/area_calculator/AreaCalculator'
 import { Pokeapi } from '../../pages/pokeapi/Pokeapi'
-import { Stripe } from '../../pages/stripe/Stripe'
+import Stripe from '../Stripe/Start/index'
 
 export const Start = () => {
   const [page, setPage] = useState('stripe')
